@@ -11,25 +11,23 @@ RAW_DIR.mkdir(parents=True, exist_ok=True)
 HEADERS = {"Accept": "application/x-ndjson"}
 
 TOURNAMENT_IDS = [
-    #"mhvD5tb9",  # Fecha 1
-    #"MxBsPRVH",  # Fecha 2
-    #"IfsCbYsv",  # Fecha 3
-    #"C4Jue0rf",  # Fecha 4
+    "mhvD5tb9",  # Fecha 1
+    "MxBsPRVH",  # Fecha 2
+    "IfsCbYsv",  # Fecha 3
+    "C4Jue0rf",  # Fecha 4
     "83kg4qfx",   # Fecha 5
-    #"M06fBQuL",  # Fecha 6
+    "M06fBQuL",  # Fecha 6
     "qaIVXjoY",   # Fecha 7
-    #"EPN0fCN8",  # Fecha 8
+    "EPN0fCN8",  # Fecha 8
 ]
 
 PLAYERS = [
     "Ajedrezfacu",    # 1° clasificado
     "MiyuKoto",       # 2°
     "FernandoPoratto", # 3°
-    "grauclub",       # 4°
-    "naty_la_25",     # 5°
-    "ninjago27",      # 6°
-    "Tomimartinez95", # 7°
-    "MTJRFAN2",       # 8°
+    "Tomimartinez95", # 4°°
+    "MTJRFAN2",       # 5°
+    "Valeny",        # 6°
 ]
 
 def get_tournament_results(tournament_id):
@@ -51,7 +49,7 @@ def get_tournament_games(tournament_id, username):
         "player": username,
         "moves": True,
         "opening": True,
-        "clocks": False,
+        "clocks": True,
     }
     response = requests.get(url, params=params, headers=HEADERS)
     response.raise_for_status()
@@ -68,14 +66,8 @@ def save_json(data, filename):
     print(f"  ✓ Guardado: {path} ({len(data)} registros)")
 
 def extraer_todo():
-    print("=== Prix Online UNLP 2026 — Extracción fechas faltantes ===\n")
-    
-    fechas_pendientes = [
-        (5, "83kg4qfx"),
-        (7, "qaIVXjoY"),
-    ]
-    
-    for i, tid in fechas_pendientes:
+    print("=== Prix Online UNLP 2026 — Extracción de datos ===\n")
+    for i, tid in enumerate(TOURNAMENT_IDS, 1):
         print(f"Fecha {i} — torneo {tid}")
         try:
             results = get_tournament_results(tid)
